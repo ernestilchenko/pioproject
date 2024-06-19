@@ -57,3 +57,13 @@ def course_list(request):
     for course in courses:
         course.set_request(request)
     return render(request, 'html/favorites_list.html', {'courses': courses, 'user': user})
+
+@login_required
+def add_to_favorites(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    _, created = Favorite.objects.get_or_create(user=request.user, course_id=course_id, course=course, )
+    if created:
+        messages.success(request, 'Course added to favorites successfully!')
+    else:
+        messages.info(request, 'Course is already in your favorites.')
+    return redirect('favorites_list')
