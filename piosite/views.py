@@ -125,3 +125,10 @@ def add_to_favorites(request, course_id):
             return JsonResponse({'message': 'User is not authenticated!'}, status=401)
     else:
         return JsonResponse({'message': 'Invalid request method!'}, status=405)
+
+@login_required
+def harmonogram(request):
+    assignments = Assignment.objects.all()
+    user = request.user
+    profile = get_object_or_404(Profile, user=user)
+    return render(request, 'html/harmonogram.html', {'user': user, 'assignments': assignments, 'profile': profile})
