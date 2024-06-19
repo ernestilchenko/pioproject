@@ -32,3 +32,7 @@ def home_view(request):
 @login_required
 def harmonogram(request):
     return render(request, 'html/harmonogram.html')
+
+@login_required
+def course(request):
+    return render(request, 'html/course.html')
