@@ -1,0 +1,375 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="menu_side_body menu_side_body_hidden">
+    <ul class="ul_menu_hidden">
+        <li class="ul_menu_hidden-item">
+            <form action="{% url 'favorites_list' %}" method="get">
+                <button class="ul_menu_hidden_button hidden_lista_button">Lista przedmiotów</button>
+            </form>
+        </li>
+        <li class="ul_menu_hidden-item">
+            <form action="{% url 'harmonogram' %}">
+                <button class="ul_menu_hidden_button hidden_harmonogram_button">Harmonogram</button>
+            </form>
+        </li>
+        <li class="ul_menu_hidden-item">
+            <form action="{% url 'login' %}">
+                <button class="ul_menu_hidden_button hidden_wyloguj_button" id="wyloguj">Wyloguj</button>
+            </form>
+        </li>
+    </ul>
+</div>
+<header class="header">
+    <form action="{% url 'faculty_list' %}" method="get">
+        <logo class="header__logo">
+            <form action="{% url 'faculty_list' %}" method="get">
+                <button class='header_logo_button'><img class="header__logo-main"
+                                                        src="{% static 'images/weeia-removebg-preview 1.png' %}"
+                                                        alt="Logo"></button>
+            </form>
+        </logo>
+    </form>
+    <ul class="ul_header">
+        <li class="ul_header-item">
+            <form action="{% url 'faculty_list' %}" method="get">
+                <button class="ul_header_button lista_button">{{ user.username }}</button>
+            </form>
+        </li>
+        <li class="ul_header-item">
+            <form action="{% url 'favorites_list' %}" method="get">
+                <button class="ul_header_button lista_button">Lista przedmiotów</button>
+            </form>
+        </li>
+        <li class="ul_header-item">
+            <form action="{% url 'harmonogram' %}">
+                <button class="ul_header_button harmonogram_button">Harmonogram</button>
+            </form>
+        </li>
+        <li class="ul_header-item">
+            <form action="{% url 'login' %}">
+                <button class="ul_header_button wyloguj_button" id="wyloguj">Wyloguj</button>
+            </form>
+        </li>
+    </ul>
+    <div class="menu_button">
+        <button id="menu_hidden_button" class="menu_hidden_button" onclick="sideMenuShow"><img
+                class="menu_hidden_button" src="{% static 'images/menu.svg' %}" alt="menu_button" id="button_image">
+        </button>
+    </div>
+
+
+</header>
+<main class="main_glowny">
+    <menu class="self_info grid-item">
+        <div class="self_info_avatar">
+            <label for="self_info_photo_add" class="custom_self_info_photo_add">
+                <div class="self_info_avatar_photo" style="border-radius: 200px">
+                    {% if profile.avatar %}
+                        <img class="self_info_avatar_image" style="border-radius: 200px" src="{{ profile.avatar.url }}"
+                             alt="Avatar">
+                    {% else %}
+                        <img class="self_info_avatar_image"
+                             src="{% static 'images/dff3ffca86b6309eec5272ae33b02804.jpg' %}" alt="Default Avatar">
+                    {% endif %}
+                </div>
+            </label>
+            <input id="self_info_photo_add" type="file" name="profile_photo">
+        </div>
+        <div class="self_info_data">
+            <ul class="self_info_data_list">
+                <li class="self_info_data_list-item">
+                    <h2 class="self_info_data_list-item_caption">Username:</h2>
+                    <input class="self_info_data_list-item_input" type="text" value="{{ user.username }}" readonly>
+                </li>
+                <li class="self_info_data_list-item">
+                    <h2 class="self_info_data_list-item_caption">Email:</h2>
+                    <input class="self_info_data_list-item_input" type="text" value="{{ user.email }}" readonly>
+                </li>
+            </ul>
+        </div>
+    </menu>
+    <content class="subjects grid-item">
+        <div class="subjects_body">
+            <div class="favourite_title">
+                <h1 class="favourite_title_text">Harmonogram</h1>
+            </div>
+            <div class="subjects_scroll">
+                {% for assignment in assignments %}
+                    <div class="subjects_scroll-subject container">
+                        <div class="subject_body">
+                            {% if assignment.course.image %}
+                                <div class="subject_img">
+                                    <img src="{{ assignment.course.image.url }}" class="subject-img-top"
+                                         alt="{{ assignment.course.title }}">
+                                </div>
+                            {% endif %}
+                            <div class="subject_interactive">
+                                <h5 class="subject-title">{{ assignment.course.title }}</h5>
+                                <p class="subject-text">{{ assignment.assignment_decription }}</p>
+                            </div>
+                            <table class="harmonogram">
+                                <tr>
+                                    <td class="titl">Termin do:</td>
+                                    <td class="conten">{{ assignment.assignment_deadline.date }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titl">
+                                        Pozostało:
+                                    </td>
+                                    <td class="data_ta_czas conten">
+                                        {{ assignment.assignment_deadline }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="titl">
+                                        Wykonano:
+                                    </td>
+                                    <td>
+                                        <progres class="perc conten">{{ assignment.assignment_progress }}%</progres>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </content>
+</main>
+<footer class="footer">
+    Ernest Ilchenko, Tymur Huselnykov ,Vladislav Doronchenkov
+</footer>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script>
+    // Function to get the CSRF token from cookies
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Adding click event listener to the "Add to Favorites" buttons
+    document.querySelectorAll('.add-to-favorites-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const courseId = this.getAttribute('data-course-id');
+            const csrftoken = getCookie('csrftoken'); // Get the CSRF token
+
+            // AJAX request to the server
+            fetch(`/pio/favorites/add/${courseId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken, // Include the CSRF token in the request header
+                    'Content-Type': 'application/json',
+                },
+                // Optional: If you need to send JSON data in your request
+                // body: JSON.stringify({ 'course_id': courseId }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json(); // or .text() if the response is not JSON
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    console.log(data); // Process your response data
+                    alert('Course added to favorites successfully!');
+                })
+                .catch((error) => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        });
+    });
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script>
+
+
+    // MENU HIDDEN
+
+
+    const menuHidden = document.getElementsByClassName('menu_side_body'),
+        buttonMenu = document.getElementById('menu_hidden_button'),
+        buttonMenuImage = document.getElementById('button_image');
+
+    function sideMenuShow() {
+        menuHidden[0].classList.remove('menu_side_body_hidden');
+        menuHidden[0].classList.add('menu_side_body_visible');
+        document.body.style.overflow = 'hidden';
+
+    }
+
+    function sideMenuHide() {
+        document.body.addEventListener('click', eve => {
+            if (eve.target != menuHidden[0] && eve.target != buttonMenuImage) {
+                menuHidden[0].classList.add('menu_side_body_hidden');
+                menuHidden[0].classList.remove('menu_side_body_visible');
+                document.body.style.overflow = 'scroll';
+            }
+        });
+
+    }
+
+    buttonMenu.addEventListener('click', sideMenuShow);
+    document.body.addEventListener('click', sideMenuHide);
+
+
+    //SUBJECT DESCRIPTION
+
+
+    let innerTextValues = document.querySelectorAll('.subject-text');
+    innerTextValues.forEach(item => {
+        let chars = item.innerHTML;
+        if (chars.length > 30) {
+            chars = chars.slice(0, 29) + '...';
+            item.innerHTML = chars;
+            console.log(chars);
+        } else {
+            return
+        }
+    });
+
+
+    //PROGRESS
+
+
+    const progres = document.querySelector('progres'),
+        percents = parseInt(progres.innerHTML);
+
+    if (percents < 40) {
+        progres.style.color = 'red';
+    } else if (percents >= 30 && percents < 90) {
+        progres.style.color = 'orange';
+    } else if (percents >= 90 && percents <= 100) {
+        progres.style.color = 'green';
+    }
+
+
+    //LEFT TIME
+
+
+    const time = document.querySelector('.data_ta_czas'),
+        currTime = new Date(time.innerHTML);
+
+    function change(stroka) {
+        let help = stroka.split(', '),
+            help1 = help[0].slice(2, (help[0].length)).trim();
+        help2 = help[2].trim().slice(0, (help[0].length - 2));
+        let help3 = help1.split(' ');
+        let res = [];
+        res.push(help[1]);
+        switch (help3[0]) {
+            case 'Jan.':
+                res.push('01');
+                break
+            case 'Feb.':
+                res.push('02');
+                break
+            case 'March':
+                res.push('03');
+                break
+            case 'April':
+                res.push('04');
+                break
+            case 'May':
+                res.push('05');
+                break
+            case 'June':
+                res.push('06');
+                break
+            case 'July':
+                res.push('07');
+                break
+            case 'Aug.':
+                res.push('08');
+                break
+            case 'Sept.':
+                res.push('09');
+                break
+            case 'Oct.':
+                res.push('10');
+                break
+            case 'Nov.':
+                res.push('11');
+                break
+            case 'Dec.':
+                res.push('12');
+                break
+        }
+        res.push(help3[1]);
+        return `${res[0]}-${res[1]}-${day = (parseInt(res[2]) < 10) ? day = '0' + res[2] : day = res[2]}`
+    }
+
+    function getTimeRemainig(endtime) {
+        let days, hours, minutes, seconds;
+        const t = Date.parse(endtime) - Date.parse(new Date());
+        if (t >= 0) {
+            days = Math.floor(t / (1000 * 3600 * 24)),
+                hours = Math.floor((t / (1000 * 3600)) % 24),
+                minutes = Math.floor((t / (1000 * 60)) % (60)),
+                seconds = Math.floor((t / 1000) % (60));
+        } else {
+            days = 0,
+                hours = 0,
+                minutes = 0,
+                seconds = 0;
+        }
+        return `${days}d. ${hours}g. ${minutes}m. ${seconds}s.`
+
+
+    }
+
+    function setClock(endtime) {
+        const timeInterval = setInterval(updateClock, 1000);
+        updateClock();
+
+        function updateClock() {
+            const t = getTimeRemainig(change(endtime));
+            time.innerHTML = t;
+        }
+    }
+
+    setClock(time.innerHTML)
+
+
+</script>
+</body>
+
+</html>
+
+
+

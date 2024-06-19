@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style_1.css' %}">
+    <title>Document</title>
+</head>
+<body>
+
+<header class="header">
+    <logo class="header__logo">
+        <a href="#"><img class="header__logo-main"
+                         src="{% static 'images/weeia-removebg-preview 1.png' %}" alt="logo_main"></a>
+        <div class="header_logo_team">
+            <!-- <h3>In cooperation with:</h3>
+            <img class="header_logo_team_logo" src="images/team_logo.png" alt="team_logo"> -->
+        </div>
+    </logo>
+    <ul class="ul_header">
+        <li class="ul_header-item">
+            <button class="ul_header_button lista_button">Lista przedmiotów</button>
+        </li>
+        <li class="ul_header-item">
+            <button class="ul_header_button harmonogram_button">Harmonogram</button>
+        </li>
+        <li class="ul_header-item">
+            <button class="ul_header_button wyloguj_button" id="wyloguj">Wyloguj</button>
+        </li>
+    </ul>
+</header>
+
+<main class="main_glowny">
+    <menu class="self_info">
+        <div class="self_info_avatar">
+            <label for="self_info_photo_add" class="custom_self_info_photo_add">
+                <div class="self_info_avatar_photo">
+                    <img class="self_info_avatar_image"
+                         src="{% static 'images/завантаження.jpeg' %}" alt="">
+                </div>
+            </label>
+            <input id="self_info_photo_add" type="file" name="profile_photo">
+        </div>
+        <div class="self_info_data">
+            <ul class="self_info_data_list">
+                <li class="self_info_data_list-item"><h2 class="self_info_data_list-item_caption">Imię:</h2>
+                    <input class="self_info_data_list-item_input" type="text" value="{{ user.first_name }}">
+                </li>
+                <li class="self_info_data_list-item"><h2 class="self_info_data_list-item_caption">Nazwisko:</h2>
+                    <input class="self_info_data_list-item_input" type="text" value="{{ user.last_name }}">
+                </li>
+                <li class="self_info_data_list-item"><h2 class="self_info_data_list-item_caption">Email:</h2>
+                    <input class="self_info_data_list-item_input" type="text" value="{{ user.email }}">
+                </li>
+            </ul>
+        </div>
+    </menu>
+    <content class="subjects grid-item">
+        <div class="subjects_body">
+            <div class="favourite_title">
+                <h1 class="favourite_title_text">Twoje ulubione kursy</h1>
+            </div>
+            <div class="subjects_scroll">
+                {% for favorite in favorites %}
+                <div class="subjects_scroll-subject">
+                    <div class="subjects_scroll-subject_functional">
+                        <ul class="subjects_scroll-subject_functional_buttons">
+                            <li class="functional_button">
+                                <button class="subjects_scroll-subject_functional_button"><img
+                                        src="{% static 'images/copy.svg' %}" alt=""
+                                        class="subjects_scroll-subject_functional_button_image">Skopiuj link
+                                </button>
+                            </li>
+                            <li class="functional_button">
+                                <button class="subjects_scroll-subject_functional_button"><img
+                                        src="{% static 'images/download.svg' %}" alt=""
+                                        class="subjects_scroll-subject_functional_button_image" download="#">Pobierz
+                                </button>
+                            </li>
+                            <li class="functional_button">
+                                <button class="subjects_scroll-subject_functional_button"><img
+                                        src="{% static 'images/like_2.svg' %}" alt=""
+                                        class="subjects_scroll-subject_functional_button_image">Ulubione
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="subjects_scroll-subject_info">
+                        <ul class="subjects_">
+                            <li>{{ favorite.course.name }}</li>
+                            <li>{{ favorite.course.description }}</li>
+                            <li>{{ favorite.course.teacher }}</li>
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </content>
+</main>
+</body>
+</html>

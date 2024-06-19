@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Registration</title>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header__logo">
+            <form action="{% url 'faculty_list' %}" method="get">
+                <button class = 'header_logo_button'><img class="header__logo-main" src="{% static 'images/weeia-removebg-preview 1.png' %}" alt="Logo"></button>
+            </form>
+        </div>
+    </header>
+    <div class="content">
+        <div class="content_header">
+            <h1>Rejestracja</h1>
+        </div>
+        <form class="rejestracja_form" method="post">
+            {% csrf_token %}
+            <div class="rejestracja_input_form">
+                <label for="username">Użytkownik:</label>
+                <div class="rejestracja_input_form_area">
+                    {{ form.username }}
+                    {{ form.username.errors }}
+                </div>     
+            </div>               
+            <div class="rejestracja_input_form">
+                <label for="email">Poczta:</label>
+                <div class="rejestracja_input_form_area">
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>  
+            </div>                 
+            <div class="rejestracja_input_form">
+                <label for="password1">Hasło:</label>
+                <div class="rejestracja_input_form_area">
+                    {{ form.password1 }}
+                    {{ form.password1.errors }}
+                </div>
+            </div>
+            <div class="rejestracja_input_form">
+                <label for="password2">Hasło:<h5 class="rejestracja_form_text">(jeszcze raz)</h5></label>
+                <div class="rejestracja_input_form_area">
+                    {{ form.password2 }}
+                    {{ form.password2.errors }}
+                </div>
+            </div>
+            <div class="rejestracja_button_submit">
+                <button type="submit" class="btn btn-primary btn-block rejestracja">Rejestracja</button>
+            </div>
+        </form>
+    </div>
+    <footer class="footer">
+        Ernest Ilchenko, Tymur Huselnykov ,Vladislav Doronchenkov
+    </footer>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
