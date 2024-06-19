@@ -1,0 +1,28 @@
+
+body {
+    background-color: #f4f4f4;
+}
+
+#header h1 {
+    color: #ffffff;
+}
+
+
+#user-tools {
+    color: #ffffff;
+}
+
+
+#site-name {
+    display: flex;
+    align-items: center;
+}
+
+#site-name img {
+    margin-right: 10px;
+}
+
+#site-name a {
+    color: #ffffff;
+    text-decoration: none;
+}
