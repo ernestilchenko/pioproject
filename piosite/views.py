@@ -82,3 +82,29 @@ def user_profile(request):
 def logout(request):
     auth_logout(request)
     return redirect('login')
+
+@login_required
+def select_faculty_and_speciality_and_favorites_list(request):
+    faculties = Faculty.objects.all()
+    user = request.user
+    specialities = Speciality.objects.all()
+    favorites = Favorite.objects.filter(user=request.user).select_related('course')
+
+    profile, created = Profile.objects.get_or_create(user=user)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('faculty_list')
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(request, 'html/course_list.html', {
+        'faculties': faculties,
+        'favorites': favorites,
+        'specialities': specialities,
+        'user': user,
+        'form': form,
+        'profile': profile,
+    })
