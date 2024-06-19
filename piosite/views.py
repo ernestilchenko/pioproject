@@ -108,3 +108,6 @@ def select_faculty_and_speciality_and_favorites_list(request):
         'form': form,
         'profile': profile,
     })
+
+def custom_404_view(request, exception):
+    return redirect('faculty_list')
