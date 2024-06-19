@@ -28,3 +28,7 @@ def login_view(request):
 
 def home_view(request):
     return HttpResponse("<h1>hello world</h1>")
+
+@login_required
+def harmonogram(request):
+    return render(request, 'html/harmonogram.html')
