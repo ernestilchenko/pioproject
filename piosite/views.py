@@ -67,3 +67,9 @@ def add_to_favorites(request, course_id):
     else:
         messages.info(request, 'Course is already in your favorites.')
     return redirect('favorites_list')
+
+@login_required
+def delete_course(request, course_id):
+    favorite = get_object_or_404(Favorite, user=request.user, course_id=course_id)
+    favorite.delete()
+    return redirect('faculty_list')
