@@ -25,3 +25,6 @@ def login_view(request):
     else:
         form = AuthenticationForm()
     return render(request, "html/logowanie.html", {"form": form})
+
+def home_view(request):
+    return HttpResponse("<h1>hello world</h1>")
