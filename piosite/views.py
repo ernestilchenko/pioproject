@@ -78,3 +78,7 @@ def delete_course(request, course_id):
 def user_profile(request):
     user = request.user
     return render(request, 'html/index.html', {'user': user})
+
+def logout(request):
+    auth_logout(request)
+    return redirect('login')
