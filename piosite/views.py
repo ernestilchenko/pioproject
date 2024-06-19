@@ -73,3 +73,8 @@ def delete_course(request, course_id):
     favorite = get_object_or_404(Favorite, user=request.user, course_id=course_id)
     favorite.delete()
     return redirect('faculty_list')
+
+@login_required
+def user_profile(request):
+    user = request.user
+    return render(request, 'html/index.html', {'user': user})
