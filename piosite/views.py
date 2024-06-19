@@ -111,3 +111,17 @@ def select_faculty_and_speciality_and_favorites_list(request):
 
 def custom_404_view(request, exception):
     return redirect('faculty_list')
+
+@csrf_exempt
+def add_to_favorites(request, course_id):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            favorite, created = Favorite.objects.get_or_create(user=request.user, course_id=course_id)
+            if created:
+                return JsonResponse({'message': 'Course added to favorites successfully!'}, status=201)
+            else:
+                return JsonResponse({'message': 'Course is already in favorites!'}, status=400)
+        else:
+            return JsonResponse({'message': 'User is not authenticated!'}, status=401)
+    else:
+        return JsonResponse({'message': 'Invalid request method!'}, status=405)
