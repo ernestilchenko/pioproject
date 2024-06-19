@@ -42,6 +42,15 @@ def course_detail(request, course_id):
     course = get_object_or_404(Course, course_id=course_id)
     return render(request, 'html/course.html', {'course': course})
 
+def register_view(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = RegisterForm()
+    return render(request, "html/rejestracja.html", {"form": form})
 def course_list(request):
     courses = Course.objects.all()
     user = request.user
