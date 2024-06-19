@@ -36,3 +36,15 @@ def harmonogram(request):
 @login_required
 def course(request):
     return render(request, 'html/course.html')
+
+@login_required
+def course_detail(request, course_id):
+    course = get_object_or_404(Course, course_id=course_id)
+    return render(request, 'html/course.html', {'course': course})
+
+def course_list(request):
+    courses = Course.objects.all()
+    user = request.user
+    for course in courses:
+        course.set_request(request)
+    return render(request, 'html/favorites_list.html', {'courses': courses, 'user': user})
