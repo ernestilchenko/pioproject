@@ -116,9 +116,3 @@ Tutaj nauczyciel może wprowadzić termin przez administrację, gdy uczeń musi 
 - [@Ajeszny](https://github.com/Ajeszny)
 - [@Andezio](https://github.com/Andezion)
 
-<style>
-        body {
-            background-color: black;
-            color: white;
-        }
-    </style>
