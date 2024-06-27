@@ -74,18 +74,45 @@ Strona administratora umożliwia przeglądanie bazy danych, wprowadzanie zmian i
 ## Strona administratora
 
 
-```sh
+```http
 http://127.0.0.1:8000/pio/admin
 ```
 ![alt text](images/img.png)
 
 ## Strona logowania
-```sh
+```http
 http://127.0.0.1:8000/pio/login
 ```
 ![alt text](images/img_1.png)
 ## Strona rejestracji
-```sh
+```http
 http://127.0.0.1:8000/pio/register
 ```
 ![alt text](images/img_2.png)
+## Strona użytkownika
+```http
+http://127.0.0.1:8000/pio/courses
+```
+Tutaj możemy zmienić avatar i dodać kursy
+![alt text](images/img_3.png)
+
+## Strona z kursami
+```http
+http://127.0.0.1:8000/pio/favorites
+```
+Tutaj możemy dodawać kursy do ulubionych, oglądać filmy, pobierać pliki pomocy i opisy.
+![alt text](images/img_4.png)
+
+## Strona z hamonogramem
+```http
+http://127.0.0.1:8000/pio/hamonogram
+```
+Tutaj nauczyciel może wprowadzić termin przez administrację, gdy uczeń musi wykonać zadanie.  
+![alt text](images/img_5.png)
+
+## Authors
+
+- [@ernestilchenko](https://www.github.com/ernestilchenko)
+- [@Ajeszny](https://github.com/Ajeszny)
+- [@Andezio](https://github.com/Andezion)
+
