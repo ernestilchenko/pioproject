@@ -1,118 +1,195 @@
-## Instalacja
+<div align="center">
+<h1>🎓 PIO Project</h1>
 
-## 1. Zainstaluj Python 3.12.0
+[Light Theme](#) | [Dark Theme](#)
 
-Pobierz i zainstaluj Python 3.12.0 z oficjalnej strony:
-[Python 3.12.0 Download](https://www.python.org/downloads/release/python-3120/)
+<style>
+  /* Этот стиль будет работать только на GitHub Pages */
+  :root[data-theme="light"] {
+    --bg-color: #ffffff;
+    --text-color: #24292e;
+    --link-color: #0366d6;
+    --border-color: #e1e4e8;
+  }
 
-## 2. Utwórz środowisko wirtualne
+  :root[data-theme="dark"] {
+    --bg-color: #0d1117;
+    --text-color: #c9d1d9;
+    --link-color: #58a6ff;
+    --border-color: #30363d;
+  }
 
-Otwórz terminal i utwórz środowisko wirtualne za pomocą następującego polecenia:
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
 
-```sh
-python<version> -m venv <virtual-environment-name>
-```
+  a {
+    color: var(--link-color);
+  }
 
-## 3.Należy wykonać następujące polecenia
+  .theme-switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+  }
+</style>
 
-```sh
- mkdir pioproject
- cd pioproject
- python3.8 -m venv env
-```
-## 4.Należy sklonować projekt z github
-```sh
-git clone https://github.com/ernestilchenko/pioproject.git
-```
+<button onclick="toggleTheme()" class="theme-switch" title="Toggle theme">
+  🌓
+</button>
 
-## 5.Należy zainstalować bibliotekę
+<script>
+  function toggleTheme() {
+    const root = document.documentElement;
+    const currentTheme = root.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  }
 
-```sh
-pip install -r requirements.txt
-```
+  // Установка начальной темы
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
 
+Platforma edukacyjna z możliwością zarządzania kursami, harmonogramem i profilami użytkowników.
 
-## Urochomienie
-Żeby urochomić serwer, znajdując się w folderze z projektem, należy wywolać następne polecenie
+![Platform Preview](images/img.png)
+</div>
 
-```sh
+## 📋 Spis treści
+- [Instalacja](#instalacja)
+- [Uruchomienie](#uruchomienie)
+- [Dostępne endpointy](#dostępne-endpointy)
+- [Funkcjonalność](#funkcjonalność)
+- [Screenshots](#screenshots)
+- [Autorzy](#autorzy)
+
+## 🚀 Instalacja
+
+### Wymagania wstępne
+- Python 3.12.0
+- Git
+
+### Kroki instalacji
+
+1. **Pobierz i zainstaluj Python**
+   - Odwiedź [oficjalną stronę Python](https://www.python.org/downloads/release/python-3120/)
+   - Pobierz i zainstaluj odpowiednią wersję dla swojego systemu
+
+2. **Przygotuj środowisko projektu**
+   ```bash
+   # Utwórz katalog projektu
+   mkdir pioproject
+   cd pioproject
+
+   # Utwórz wirtualne środowisko
+   python3.8 -m venv env
+
+   # Aktywuj środowisko (Linux/MacOS)
+   source env/bin/activate
+   # LUB dla Windows
+   .\env\Scripts\activate
+   ```
+
+3. **Sklonuj repozytorium**
+   ```bash
+   git clone https://github.com/ernestilchenko/pioproject.git
+   ```
+
+4. **Zainstaluj zależności**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## 🎮 Uruchomienie
+
+Aby uruchomić serwer deweloperski:
+```bash
 python manage.py runserver
 ```
+Aplikacja będzie dostępna pod adresem: `http://127.0.0.1:8000/`
 
+## 🛣 Dostępne endpointy
 
-## Oto wszystkie dostępne strony 
+| Endpoint | Opis |
+|----------|------|
+| `/register/` | Rejestracja nowego użytkownika |
+| `/login/` | Logowanie do systemu |
+| `/favorites/` | Lista ulubionych kursów |
+| `/favorites/add/<course_id>/` | Dodawanie kursu do ulubionych |
+| `/courses/` | Lista wszystkich kursów |
+| `/courses/delete_course/<course_id>/` | Usuwanie kursu |
+| `/harmonogram/` | Zarządzanie harmonogramem |
+| `/course/<course_id>/` | Szczegóły kursu |
+| `/admin/` | Panel administracyjny |
 
-```python
-urlpatterns = [
-    path('register/', views.register_view, name='register'),
-    path('login/', views.login_view, name='login'),
-    path('favorites/add/<int:course_id>/', add_to_favorites, name='add_to_favorites'),
-    path('favorites/', views.course_list, name='favorites_list'),
-    path('favorites/add/<int:course_id>/', views.add_to_favorites, name='add_to_favorites'),
-    path('courses/delete_course/<int:course_id>/', views.delete_course, name='delete_course'),
-    path('logout/', views.logout, name='logout'),
-    path('courses/', views.select_faculty_and_speciality_and_favorites_list, name='faculty_list'),
-    path('harmonogram/', views.harmonogram, name='harmonogram'),
-    path('course/', views.course, name='course'),
-    path('harmonogram/', views.harmonogram, name='harmonogram'),
-    path('course/<int:course_id>/', views.course_detail, name='course_detail'),
-    path('admin/', admin_site.urls, name='admin_site')
-]
-```
+## 💡 Funkcjonalność
 
+### Panel Administratora
+- **URL**: `http://127.0.0.1:8000/pio/admin`
+- Zarządzanie bazą danych
+- Dodawanie i edycja kursów
+- Zarządzanie użytkownikami
 
-## Opis:
+### Modele Danych
+1. **Użytkownicy**
+   - Login i hasło (szyfrowane)
+   - Dane osobowe
+   - Uprawnienia
 
-Strona administratora umożliwia przeglądanie bazy danych, wprowadzanie zmian i dodawanie nowych kursów. Aby wprowadzić zmiany, wybierz model po lewej stronie, a następnie przejdź do żądanego rekordu, klikając pierwszą kolumnę rekordu. Po wprowadzeniu zmian, zapisz je na dole. Możesz także dodać wpis w prawym górnym rogu każdego modelu.
+2. **Profile użytkowników**
+   - Customizacja avatara
+   - Dane specyficzne dla typu użytkownika
 
-## Dostępne są cztery modele:
-- Użytkownicy (login, hasło (szyfrowane), imię, nazwisko, e-mail, prawa dostępu itp.)
-- Profile użytkowników (dane w zależności od typu użytkownika (można zmienić awatar użytkownika))
-- Hamonogram (powiązany z kursem, tytułem, opisem, datą rozpoczęcia i zakończenia) przypisany do użytkownika lub grupy.
-- Kursy - (można utworzyć kurs, powiązać z nim wideo, opis, przydatne materiały i dodać do ulubionych kursów użytkownika lub usunąć) 
+3. **Harmonogram**
+   - Powiązanie z kursami
+   - Zarządzanie terminami
+   - Przypisywanie do użytkowników/grup
 
-## Strona administratora
+4. **Kursy**
+   - Materiały wideo
+   - Opisy i dokumentacja
+   - System ulubionych
 
+## 📸 Screenshots
 
-```http
-http://127.0.0.1:8000/pio/admin
-```
-![alt text](images/img.png)
+<div class="screenshot-container">
 
-## Strona logowania
-```http
-http://127.0.0.1:8000/pio/login
-```
-![alt text](images/img_1.png)
-## Strona rejestracji
-```http
-http://127.0.0.1:8000/pio/register
-```
-![alt text](images/img_2.png)
-## Strona użytkownika
-```http
-http://127.0.0.1:8000/pio/courses
-```
-Tutaj możemy zmienić avatar i dodać kursy
-![alt text](images/img_3.png)
+### Panel logowania
+![Login Page](images/img_1.png)
 
-## Strona z kursami
-```http
-http://127.0.0.1:8000/pio/favorites
-```
-Tutaj możemy dodawać kursy do ulubionych, oglądać filmy, pobierać pliki pomocy i opisy.
-![alt text](images/img_4.png)
+### Strona rejestracji
+![Register Page](images/img_2.png)
 
-## Strona z hamonogramem
-```http
-http://127.0.0.1:8000/pio/hamonogram
-```
-Tutaj nauczyciel może wprowadzić termin przez administrację, gdy uczeń musi wykonać zadanie.  
-![alt text](images/img_5.png)
+### Profil użytkownika
+![User Profile](images/img_3.png)
 
-## Authors
+### Lista kursów
+![Courses List](images/img_4.png)
 
-- [@ernestilchenko](https://www.github.com/ernestilchenko)
-- [@Ajeszny](https://github.com/Ajeszny)
-- [@Andezio](https://github.com/Andezion)
+### Harmonogram
+![Schedule](images/img_5.png)
 
+</div>
+
+## 👥 Autorzy
+
+<div class="authors-container">
+
+[![GitHub](https://img.shields.io/badge/GitHub-ernestilchenko-blue?style=for-the-badge&logo=github)](https://github.com/ernestilchenko)
+[![GitHub](https://img.shields.io/badge/GitHub-Ajeszny-blue?style=for-the-badge&logo=github)](https://github.com/Ajeszny)
+[![GitHub](https://img.shields.io/badge/GitHub-Andezio-blue?style=for-the-badge&logo=github)](https://github.com/Andezion)
+
+</div>
+
+<hr>
+
+<div align="center">
+  <small>Made with ❤️ by the PIO Team</small>
+</div>
